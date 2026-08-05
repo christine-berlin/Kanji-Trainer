@@ -1,1 +1,80 @@
 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#111827;
+    color:white;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
+    min-height:100vh;
+}
+
+.container{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    min-height:100vh;
+}
+
+h1{
+    margin-bottom:40px;
+    font-size:2rem;
+}
+
+#card{
+    width:100%;
+    max-width:420px;
+    background:#1f2937;
+    border-radius:24px;
+    padding:40px 30px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+#kanji{
+    font-size:8rem;
+    margin-bottom:25px;
+}
+
+#details{
+    min-height:180px;
+}
+
+#meaning,
+#onyomi,
+#kunyomi,
+#examples{
+    margin:12px 0;
+    font-size:1.15rem;
+    line-height:1.5;
+}
+
+button{
+    margin-top:30px;
+    width:260px;
+    padding:18px;
+    border:none;
+    border-radius:18px;
+    background:linear-gradient(180deg,#2997ff,#007aff);
+    color:white;
+    font-size:1.1rem;
+    font-weight:600;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,122,255,.35);
+    transition:.15s;
+}
+
+button:active{
+    transform:scale(.96);
+}
+
+#progress{
+    margin-top:25px;
+    color:#9ca3af;
+    font-size:1rem;
+}
