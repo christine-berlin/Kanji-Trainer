@@ -11,6 +11,11 @@ const kunyomiEl = document.getElementById("kunyomi");
 const examplesEl = document.getElementById("examples");
 const progressEl = document.getElementById("progress");
 const nextButton = document.getElementById("nextButton");
+const showAllButton = document.getElementById("showAllButton");
+const allKanji = document.getElementById("allKanji");
+const kanjiGrid = document.getElementById("kanjiGrid");
+const backButton = document.getElementById("backButton");
+const card = document.getElementById("card");
 
 function shuffle(array){
     for(let i = array.length - 1; i > 0; i--){
