@@ -83,6 +83,46 @@ document.body.addEventListener("click", (e) => {
 });
 
 nextButton.addEventListener("click", showNextKanji);
+function renderKanjiGrid(){
 
+    kanjiGrid.innerHTML = "";
+
+    kanji.forEach(item=>{
+
+        const cell=document.createElement("div");
+
+        cell.className="kanjiCell";
+
+        cell.textContent=item.kanji;
+
+        kanjiGrid.appendChild(cell);
+
+    });
+
+}
+
+showAllButton.addEventListener("click",()=>{
+
+    renderKanjiGrid();
+
+    card.style.display="none";
+    nextButton.style.display="none";
+    progressEl.style.display="none";
+    showAllButton.style.display="none";
+
+    allKanji.style.display="block";
+
+});
+
+backButton.addEventListener("click",()=>{
+
+    allKanji.style.display="none";
+
+    card.style.display="block";
+    nextButton.style.display="block";
+    progressEl.style.display="block";
+    showAllButton.style.display="block";
+
+});
 newRound();
 showNextKanji();
