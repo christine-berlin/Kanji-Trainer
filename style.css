@@ -78,3 +78,24 @@ button:active{
     color:#9ca3af;
     font-size:1rem;
 }
+
+#allKanji{
+    width:100%;
+    max-width:500px;
+    text-align:center;
+}
+
+#kanjiGrid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.kanjiCell{
+    background:#1f2937;
+    border-radius:15px;
+    padding:18px;
+    font-size:42px;
+    cursor:pointer;
+}
