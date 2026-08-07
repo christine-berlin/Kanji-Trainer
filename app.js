@@ -94,7 +94,38 @@ function renderKanjiGrid(){
 showAllButton.addEventListener("click",()=>{
 
     renderKanjiGrid();
-    
+    kanji.forEach(item => {
+
+    const cell = document.createElement("div");
+
+    cell.className = "kanjiCell";
+
+    cell.textContent = item.kanji;
+
+    cell.addEventListener("click", () => {
+
+        current = item;
+        revealed = false;
+
+        kanjiEl.textContent = current.kanji;
+
+        meaningEl.textContent = "";
+        onyomiEl.textContent = "";
+        kunyomiEl.textContent = "";
+        examplesEl.innerHTML = "";
+
+        allKanji.style.display = "none";
+
+        card.style.display = "block";
+        nextButton.style.display = "block";
+        progressEl.style.display = "block";
+        showAllButton.style.display = "block";
+
+    });
+
+    kanjiGrid.appendChild(cell);
+
+    });
     card.style.display="none";
     nextButton.style.display="none";
     progressEl.style.display="none";
