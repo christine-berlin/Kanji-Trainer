@@ -87,17 +87,7 @@ function renderKanjiGrid(){
 
     kanjiGrid.innerHTML = "";
 
-    kanji.forEach(item=>{
-
-        const cell=document.createElement("div");
-
-        cell.className="kanjiCell";
-
-        cell.textContent=item.kanji;
-
-        kanjiGrid.appendChild(cell);
-
-    });
+    
 
 }
 
