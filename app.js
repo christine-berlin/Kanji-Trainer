@@ -94,7 +94,7 @@ function renderKanjiGrid(){
 showAllButton.addEventListener("click",()=>{
 
     renderKanjiGrid();
-
+    
     card.style.display="none";
     nextButton.style.display="none";
     progressEl.style.display="none";
