@@ -1,4 +1,4 @@
-```javascript
+
 const kanji = [
 
     {
@@ -1620,4 +1620,4 @@ const kanji = [
     }
 
 ];
-```
+
