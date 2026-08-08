@@ -16,6 +16,8 @@ const allKanji = document.getElementById("allKanji");
 const kanjiGrid = document.getElementById("kanjiGrid");
 const backButton = document.getElementById("backButton");
 const card = document.getElementById("card");
+const kanjiDetailBack = document.getElementById("kanjiDetailBack");
+const closeKanjiButton = document.getElementById("closeKanjiButton");
 
 
 function shuffle(array) {
@@ -129,6 +131,32 @@ function renderKanjiGrid() {
     });
 }
 
+function openKanjiDetail(item) {
+
+    current = item;
+    revealed = true;
+
+    kanjiEl.textContent = current.kanji;
+
+    meaningEl.innerHTML = "";
+    onyomiEl.innerHTML = "";
+    kunyomiEl.innerHTML = "";
+    examplesEl.innerHTML = "";
+
+    // Hide the Show All screen
+    allKanji.style.display = "none";
+
+    // Show only the Kanji card
+    card.style.display = "block";
+
+    // Hide Next and progress
+    nextButton.style.display = "none";
+    progressEl.style.display = "none";
+    showAllButton.style.display = "none";
+
+    // Show X button
+    kanjiDetailBack.style.display = "block";
+}
 
 /* --------------------------------
    SHOW ALL KANJI
@@ -183,6 +211,20 @@ document.body.addEventListener("click", (e) => {
 
 });
 
+
+closeKanjiButton.addEventListener("click", () => {
+
+    // Hide Kanji detail
+    card.style.display = "none";
+    kanjiDetailBack.style.display = "none";
+
+    // Go back to Show All
+    allKanji.style.display = "block";
+
+    showAllButton.style.display = "none";
+    nextButton.style.display = "none";
+    progressEl.style.display = "none";
+});
 
 /* --------------------------------
    NEXT KANJI
