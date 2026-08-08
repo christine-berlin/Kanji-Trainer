@@ -1344,9 +1344,7 @@ const kanji = [
     }
 
 ];
-```
 
-**Hinweis:** In dieser Liste sind ein paar Kanji absichtlich mehrfach enthalten, damit wir zunächst die App-Funktion testen können. Bevor wir die endgültige N5-Datenbank festschreiben, sollten wir die Liste noch **bereinigen und auf genau 100 eindeutige Kanji** bringen.
 
-Nach dem Speichern sollte deine bestehende App sofort viel mehr Kanji anzeigen. `app.js` musst du dafür **nicht anfassen**.
+
 
