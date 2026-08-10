@@ -157,6 +157,15 @@ function openKanjiDetail(item) {
     // Show X button
     kanjiDetailBack.style.display = "block";
 }
+kanjiDetailBack.addEventListener("click", () => {
+
+    // Hide detail view
+    card.style.display = "none";
+    kanjiDetailBack.style.display = "none";
+
+    // Show All Kanji again
+    allKanji.style.display = "block";
+});
 
 /* --------------------------------
    SHOW ALL KANJI
