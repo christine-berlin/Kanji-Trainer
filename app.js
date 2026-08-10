@@ -2,7 +2,7 @@ let remaining = [];
 let current = null;
 let progress = 0;
 let revealed = false;
-
+const kanjiDetailBack = document.getElementById("kanjiDetailBack");
 const kanjiEl = document.getElementById("kanji");
 const meaningEl = document.getElementById("meaning");
 const onyomiEl = document.getElementById("onyomi");
