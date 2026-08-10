@@ -1530,16 +1530,6 @@ const kanji = [
     },
 
     {
-        kanji: "白",
-        meaning: "white",
-        onyomi: "ハク・ビャク",
-        kunyomi: "しろ・しら",
-        examples: [
-            { word: "白い", reading: "しろい", meaning: "white" }
-        ]
-    },
-
-    {
         kanji: "赤",
         meaning: "red",
         onyomi: "セキ",
@@ -1580,16 +1570,6 @@ const kanji = [
     },
 
     {
-        kanji: "白",
-        meaning: "white",
-        onyomi: "ハク",
-        kunyomi: "しろ",
-        examples: [
-            { word: "白い", reading: "しろい", meaning: "white" }
-        ]
-    },
-
-    {
         kanji: "青",
         meaning: "blue",
         onyomi: "セイ",
@@ -1606,16 +1586,6 @@ const kanji = [
         kunyomi: "くろ",
         examples: [
             { word: "黒い", reading: "くろい", meaning: "black" }
-        ]
-    },
-
-    {
-        kanji: "白",
-        meaning: "white",
-        onyomi: "ハク",
-        kunyomi: "しろ",
-        examples: [
-            { word: "白い", reading: "しろい", meaning: "white" }
         ]
     }
 
