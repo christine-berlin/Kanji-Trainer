@@ -1,5 +1,23 @@
 
 const kanji = [
+    {
+    kanji: "吉",
+    meaning: "good luck, happiness",
+    onyomi: "キチ (kichi), キツ (kitsu)",
+    kunyomi: "よし (yoshi)",
+    examples: [
+        {
+            word: "吉日",
+            reading: "きちじつ",
+            meaning: "lucky day"
+        },
+        {
+            word: "吉",
+            reading: "よし",
+            meaning: "good fortune, happiness"
+        }
+    ]
+},
 
     {
         kanji: "一",
