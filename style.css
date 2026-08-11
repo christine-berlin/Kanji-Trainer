@@ -118,3 +118,4 @@ button:active{
 #closeKanjiButton:active {
     transform: scale(.9);
 }
+<div id="tapHint">👆 Tap to reveal details</div>
