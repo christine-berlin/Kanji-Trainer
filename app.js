@@ -21,7 +21,7 @@ const backButton = document.getElementById("backButton");
 
 const card = document.getElementById("card");
 const kanjiDetailBack = document.getElementById("kanjiDetailBack");
-
+<div id="tapHint">👆 Tap to reveal details</div>
 
 // Shuffle
 function shuffle(array) {
