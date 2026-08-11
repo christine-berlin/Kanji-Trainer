@@ -21,7 +21,7 @@ const backButton = document.getElementById("backButton");
 
 const card = document.getElementById("card");
 const kanjiDetailBack = document.getElementById("kanjiDetailBack");
-<div id="tapHint">👆 Tap to reveal details</div>
+const tapHint = document.getElementById("tapHint");
 
 // Shuffle
 function shuffle(array) {
@@ -65,7 +65,7 @@ function showNextKanji() {
     onyomiEl.textContent = "";
     kunyomiEl.textContent = "";
     examplesEl.innerHTML = "";
-    <div id="tapHint">👆 Tap to reveal details</div>
+    tapHint.style.display = "block";
     progressEl.textContent =
         progress + " / " + kanji.length;
 }
@@ -98,7 +98,7 @@ function reveal() {
         `;
 
     });
-
+tapHint.style.display = "none";
     examplesEl.innerHTML = html;
 }
 
