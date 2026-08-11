@@ -65,7 +65,7 @@ function showNextKanji() {
     onyomiEl.textContent = "";
     kunyomiEl.textContent = "";
     examplesEl.innerHTML = "";
-
+    <div id="tapHint">👆 Tap to reveal details</div>
     progressEl.textContent =
         progress + " / " + kanji.length;
 }
