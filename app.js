@@ -133,10 +133,30 @@ function openKanjiDetail(item) {
 
     current = item;
 
-    revealed = false;
+    revealed = true;
 
     kanjiEl.textContent = current.kanji;
+    
 
+meaningEl.innerHTML =
+    "<strong>Meaning:</strong> " + current.meaning;
+
+onyomiEl.innerHTML =
+    "<strong>On:</strong> " + current.onyomi;
+
+kunyomiEl.innerHTML =
+    "<strong>Kun:</strong> " + current.kunyomi;
+
+let html = "<strong>Examples:</strong><br><br>";
+
+current.examples.forEach(example => {
+    html += `
+        ${example.word} (${example.reading})<br>
+        ${example.meaning}<br><br>
+    `;
+});
+
+examplesEl.innerHTML = html;
     meaningEl.textContent = "";
     onyomiEl.textContent = "";
     kunyomiEl.textContent = "";
