@@ -117,5 +117,19 @@ button:active{
 
 #closeKanjiButton:active {
     transform: scale(.9);
+}i
+#tapHint {
+    margin-top: 10px;
+    color: #9ca3af;
+    font-size: 0.95rem;
+    animation: pulse 1.8s infinite;
 }
-<div id="tapHint">👆 Tap to reveal details</div>
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.5;
+    }
+    50% {
+        opacity: 1;
+    }
+}
