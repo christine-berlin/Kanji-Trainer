@@ -157,10 +157,6 @@ current.examples.forEach(example => {
 });
 
 examplesEl.innerHTML = html;
-    meaningEl.textContent = "";
-    onyomiEl.textContent = "";
-    kunyomiEl.textContent = "";
-    examplesEl.innerHTML = "";
 
     // Hide Show All
     allKanji.style.display = "none";
