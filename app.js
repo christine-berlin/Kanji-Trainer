@@ -250,3 +250,26 @@ document.body.addEventListener("click", (e) => {
 newRound();
 
 showNextKanji();
+// Swipe to next Kanji
+let touchStartX = 0;
+let touchEndX = 0;
+
+card.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+card.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+
+    const swipeDistance = touchEndX - touchStartX;
+
+    // Swipe left → next Kanji
+    if (swipeDistance < -50) {
+        showNextKanji();
+    }
+
+    // Swipe right → also next Kanji
+    if (swipeDistance > 50) {
+        showNextKanji();
+    }
+});
