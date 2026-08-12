@@ -157,7 +157,7 @@ current.examples.forEach(example => {
 });
 
 examplesEl.innerHTML = html;
-
+    tapHint.style.display= "none";
     // Hide Show All
     allKanji.style.display = "none";
 
