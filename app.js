@@ -74,8 +74,24 @@ function showNextKanji() {
 // Reveal information
 function reveal() {
 
-    if (revealed || !current) return;
+    if (!current) return;
 
+    // If details are currently visible → hide them
+    if (revealed) {
+
+        revealed = false;
+
+        meaningEl.textContent = "";
+        onyomiEl.textContent = "";
+        kunyomiEl.textContent = "";
+        examplesEl.innerHTML = "";
+
+        tapHint.style.display = "block";
+
+        return;
+    }
+
+    // Otherwise → show details
     revealed = true;
 
     meaningEl.innerHTML =
@@ -87,8 +103,7 @@ function reveal() {
     kunyomiEl.innerHTML =
         "<strong>Kun:</strong> " + current.kunyomi;
 
-    let html =
-        "<strong>Examples:</strong><br><br>";
+    let html = "<strong>Examples:</strong><br><br>";
 
     current.examples.forEach(example => {
 
@@ -98,8 +113,10 @@ function reveal() {
         `;
 
     });
-tapHint.style.display = "none";
+
     examplesEl.innerHTML = html;
+
+    tapHint.style.display = "none";
 }
 
 
