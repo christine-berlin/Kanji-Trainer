@@ -23,6 +23,9 @@ const card = document.getElementById("card");
 const kanjiDetailBack = document.getElementById("kanjiDetailBack");
 const tapHint = document.getElementById("tapHint");
 
+let kanjiHistory = [];
+let historyIndex = -1;
+
 // Shuffle
 function shuffle(array) {
 
