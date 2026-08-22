@@ -52,14 +52,29 @@ function newRound() {
 // Show next Kanji
 function showNextKanji() {
 
-    if (remaining.length === 0) {
-        newRound();
+    // If we went backwards and then go forward again,
+    // show the next Kanji from history
+    if (historyIndex < kanjiHistory.length - 1) {
+
+        historyIndex++;
+
+        current = kanjiHistory[historyIndex];
+
+    } else {
+
+        if (remaining.length === 0) {
+            newRound();
+        }
+
+        current = remaining.pop();
+
+        // Add new Kanji to history
+        kanjiHistory.push(current);
+
+        historyIndex = kanjiHistory.length - 1;
     }
 
-    current = remaining.pop();
-
     progress++;
-
     revealed = false;
 
     kanjiEl.textContent = current.kanji;
@@ -68,7 +83,9 @@ function showNextKanji() {
     onyomiEl.textContent = "";
     kunyomiEl.textContent = "";
     examplesEl.innerHTML = "";
+
     tapHint.style.display = "block";
+
     progressEl.textContent =
         progress + " / " + kanji.length;
 }
