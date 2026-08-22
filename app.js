@@ -48,6 +48,32 @@ function newRound() {
     progress = 0;
 }
 
+function showPreviousKanji() {
+
+    if (historyIndex <= 0) {
+        return;
+    }
+
+    historyIndex--;
+
+    current = kanjiHistory[historyIndex];
+
+    revealed = false;
+
+    kanjiEl.textContent = current.kanji;
+
+    meaningEl.textContent = "";
+    onyomiEl.textContent = "";
+    kunyomiEl.textContent = "";
+    examplesEl.innerHTML = "";
+
+    tapHint.style.display = "block";
+
+    progress = historyIndex + 1;
+
+    progressEl.textContent =
+        progress + " / " + kanji.length;
+}
 
 // Show next Kanji
 function showNextKanji() {
