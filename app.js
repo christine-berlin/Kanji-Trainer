@@ -322,17 +322,24 @@ card.addEventListener("touchstart", (e) => {
 });
 
 card.addEventListener("touchend", (e) => {
-    touchEndX = e.changedTouches[0].screenX;
 
-    const swipeDistance = touchEndX - touchStartX;
+    const endX = e.changedTouches[0].clientX;
 
-    // Swipe left → next Kanji
-    if (swipeDistance < -50) {
-        showNextKanji();
+    const distanceX = endX - startX;
+
+    if (Math.abs(distanceX) > 60 && isSwiping) {
+
+        // Swipe LEFT → next Kanji
+        if (distanceX < 0) {
+            showNextKanji();
+        }
+
+        // Swipe RIGHT → previous Kanji
+        else {
+            showPreviousKanji();
+        }
+
+        swipeHint.style.display = "none";
     }
 
-    // Swipe right → also next Kanji
-    if (swipeDistance > 50) {
-        showNextKanji();
-    }
 });
