@@ -75,50 +75,33 @@ function newRound() {
 
 function updateSwipeHints() {
 
-    const leftHint =
-        document.querySelector(".swipeHintLeft");
+    const leftHint = document.querySelector(".swipeLeft");
+    const rightHint = document.querySelector(".swipeRight");
 
-    const rightHint =
-        document.querySelector(".swipeHintRight");
-
-
-    // =========================
-    // PREVIOUS
-    // =========================
-
-    // At 1 / 150 there is no Previous
-    if (progress <= 1) {
-
-        if (leftHint) {
-            leftHint.style.display = "none";
-        }
-
-    } else {
-
-        if (leftHint) {
-            leftHint.style.display = "flex";
-        }
+    if (!leftHint || !rightHint) {
+        return;
     }
 
+    // Bei 1 / 150: Previous verstecken
+    if (progress <= 1) {
+        leftHint.style.display = "none";
+    } else {
+        leftHint.style.display = "flex";
+    }
+
+    // Bei 150 / 150: Next verstecken
+    if (progress >= kanji.length) {
+        rightHint.style.display = "none";
+    } else {
+        rightHint.style.display = "flex";
+    }
+}
 
     // =========================
     // NEXT
     // =========================
 
-    // At 150 / 150 there is no Next
-    if (progress >= kanji.length) {
-
-        if (rightHint) {
-            rightHint.style.display = "none";
-        }
-
-    } else {
-
-        if (rightHint) {
-            rightHint.style.display = "flex";
-        }
-    }
-}
+    // At 150 / 150 there is no 
 
 
 // =========================
