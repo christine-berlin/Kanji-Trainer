@@ -26,7 +26,7 @@ const backButton = document.getElementById("backButton");
 const card = document.getElementById("card");
 const kanjiDetailBack = document.getElementById("kanjiDetailBack");
 const tapHint = document.getElementById("tapHint");
-
+const swipeHint = document.getElementById("swipeHint");
 
 // =========================
 // KANJI HISTORY
