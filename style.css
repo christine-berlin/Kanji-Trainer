@@ -188,3 +188,77 @@ button:active{
         font-size: 0.85rem;
     }
 }
+
+/* =========================
+   SWIPE HINT
+   ========================= */
+
+#swipeHint {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    display: flex;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+
+.swipeDirection {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    font-size: 13px;
+
+    line-height: 1.3;
+
+    opacity: 0.8;
+}
+
+
+.swipeDirection strong {
+    font-size: 16px;
+
+    margin-top: 3px;
+}
+
+
+.swipeArrow {
+    font-size: 38px;
+
+    line-height: 1;
+
+    margin-bottom: 4px;
+}
+
+
+.swipeLeft {
+    color: #4fc3f7;
+
+    text-align: left;
+}
+
+
+.swipeRight {
+    color: #8bea5c;
+
+    text-align: right;
+}
+
+
+/* Make sure the card can position the hints */
+#card {
+    position: relative;
+}
