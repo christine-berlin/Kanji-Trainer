@@ -2,6 +2,7 @@ let remaining = [];
 let current = null;
 let progress = 0;
 let revealed = false;
+let isInGridDetailMode = false;
 
 const kanjiEl = document.getElementById("kanji");
 const meaningEl = document.getElementById("meaning");
@@ -154,6 +155,7 @@ function renderKanjiGrid() {
 }
 
 function openKanjiDetail(item) {
+    isInGridDetailMode = true;
     current = item;
     revealed = true;
 
@@ -198,12 +200,14 @@ showAllButton.addEventListener("click", () => {
 });
 
 kanjiDetailBack.addEventListener("click", () => {
+    isInGridDetailMode = false;
     card.style.display = "none";
     kanjiDetailBack.style.display = "none";
     allKanji.style.display = "block";
 });
 
 backButton.addEventListener("click", () => {
+    isInGridDetailMode = false;
     allKanji.style.display = "none";
     card.style.display = "block";
     nextButton.style.display = "block";
@@ -228,6 +232,10 @@ document.body.addEventListener("click", (e) => {
         e.target === kanjiDetailBack ||
         e.target.classList.contains("kanjiCell")
     ) {
+        return;
+    }
+
+    if (isInGridDetailMode) {
         return;
     }
 
