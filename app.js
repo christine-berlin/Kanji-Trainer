@@ -634,6 +634,11 @@ document.body.addEventListener(
     "click",
     (e) => {
 
+        if (suppressCardClick) {
+            suppressCardClick = false;
+            return;
+        }
+
         if (
             e.target === nextButton ||
             e.target === showAllButton ||
@@ -656,65 +661,78 @@ document.body.addEventListener(
 // SWIPE
 // =========================
 
-let touchStartX = 0;
+let swipeStartX = 0;
+let swipeStartY = 0;
+let isDragging = false;
+let suppressCardClick = false;
+const swipeThreshold = 70;
 
+function resetSwipeState() {
+    isDragging = false;
+    card.style.transition = "transform 0.18s ease, opacity 0.18s ease";
+    card.style.transform = "";
+    card.style.opacity = "";
+}
 
-card.addEventListener(
-    "touchstart",
-    (e) => {
+function applySwipePosition(deltaX) {
+    const clampedX = Math.max(-150, Math.min(150, deltaX));
+    card.style.transform = `translateX(${clampedX}px) rotate(${clampedX * 0.08}deg)`;
+    card.style.opacity = String(Math.max(0.68, 1 - Math.abs(clampedX) / 250));
+}
 
-        touchStartX =
-            e.changedTouches[0].screenX;
-
+card.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) {
+        return;
     }
-);
 
+    swipeStartX = e.clientX;
+    swipeStartY = e.clientY;
+    isDragging = true;
+    card.style.transition = "none";
+    card.setPointerCapture?.(e.pointerId);
+});
 
-card.addEventListener(
-    "touchend",
-    (e) => {
-
-        const touchEndX =
-            e.changedTouches[0].screenX;
-
-
-        const distanceX =
-            touchEndX - touchStartX;
-
-
-        // Ignore small movements
-
-        if (
-            Math.abs(distanceX) < 60
-        ) {
-
-            return;
-        }
-
-
-        // =========================
-        // SWIPE LEFT → PREVIOUS
-        // =========================
-
-        if (distanceX < 0) {
-
-            showPreviousKanji();
-
-        }
-
-
-        // =========================
-        // SWIPE RIGHT → NEXT
-        // =========================
-
-        else {
-
-            showNextKanji();
-
-        }
-
+card.addEventListener("pointermove", (e) => {
+    if (!isDragging) {
+        return;
     }
-);
+
+    const deltaX = e.clientX - swipeStartX;
+    const deltaY = e.clientY - swipeStartY;
+
+    if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 12) {
+        resetSwipeState();
+        return;
+    }
+
+    applySwipePosition(deltaX);
+});
+
+card.addEventListener("pointerup", (e) => {
+    if (!isDragging) {
+        return;
+    }
+
+    const deltaX = e.clientX - swipeStartX;
+    resetSwipeState();
+
+    if (Math.abs(deltaX) < swipeThreshold) {
+        return;
+    }
+
+    suppressCardClick = true;
+    setTimeout(() => {
+        suppressCardClick = false;
+    }, 0);
+
+    if (deltaX < 0) {
+        showPreviousKanji();
+    } else {
+        showNextKanji();
+    }
+});
+
+card.addEventListener("pointercancel", resetSwipeState);
 
 
 // =========================
@@ -726,3 +744,4 @@ newRound();
 showNextKanji();
 
 updateSwipeHints();
+

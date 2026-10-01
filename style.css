@@ -34,6 +34,10 @@ h1{
     padding:40px 30px;
     text-align:center;
     box-shadow:0 10px 30px rgba(0,0,0,.35);
+    position:relative;
+    touch-action: pan-y;
+    user-select:none;
+    -webkit-user-select:none;
 }
 
 #kanji{
@@ -262,3 +266,4 @@ button:active{
 #card {
     position: relative;
 }
+
