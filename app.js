@@ -1,13 +1,7 @@
-
 let remaining = [];
 let current = null;
 let progress = 0;
 let revealed = false;
-
-
-// =========================
-// ELEMENTS
-// =========================
 
 const kanjiEl = document.getElementById("kanji");
 const meaningEl = document.getElementById("meaning");
@@ -18,660 +12,227 @@ const progressEl = document.getElementById("progress");
 
 const nextButton = document.getElementById("nextButton");
 const showAllButton = document.getElementById("showAllButton");
-
 const allKanji = document.getElementById("allKanji");
 const kanjiGrid = document.getElementById("kanjiGrid");
 const backButton = document.getElementById("backButton");
-
 const card = document.getElementById("card");
-
-const kanjiDetailBack =
-    document.getElementById("kanjiDetailBack");
-
-const tapHint =
-    document.getElementById("tapHint");
-
-const swipeHint =
-    document.getElementById("swipeHint");
-
-
-// =========================
-// KANJI HISTORY
-// =========================
+const kanjiDetailBack = document.getElementById("kanjiDetailBack");
+const tapHint = document.getElementById("tapHint");
+const swipeHint = document.getElementById("swipeHint");
 
 let kanjiHistory = [];
 let historyIndex = -1;
 
-
-// =========================
-// SHUFFLE
-// =========================
-
 function shuffle(array) {
-
     for (let i = array.length - 1; i > 0; i--) {
-
-        const j =
-            Math.floor(Math.random() * (i + 1));
-
-        [array[i], array[j]] =
-            [array[j], array[i]];
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }
 
-
-// =========================
-// NEW ROUND
-// =========================
-
 function newRound() {
-
     remaining = [...kanji];
-
     shuffle(remaining);
-
     progress = 0;
 }
 
+function showSwipeHints() {
+    if (!swipeHint) return;
+    swipeHint.style.display = "flex";
+    updateSwipeHints();
+}
 
-// =========================
-// UPDATE SWIPE HINTS
-// =========================
+function hideSwipeHints() {
+    if (!swipeHint) return;
+    swipeHint.style.display = "none";
+}
 
 function updateSwipeHints() {
+    const leftHint = document.querySelector(".swipeLeft");
+    const rightHint = document.querySelector(".swipeRight");
 
-    const leftHint =
-        document.querySelector(".swipeLeft");
+    if (!leftHint || !rightHint) return;
 
-    const rightHint =
-        document.querySelector(".swipeRight");
-
-
-    if (!leftHint || !rightHint) {
-        return;
-    }
-
-
-    // =========================
-    // PREVIOUS
-    // =========================
-
-    // First Kanji:
-    // Previous is invisible,
-    // but keeps its space.
-
-    if (progress <= 1) {
-
-        leftHint.style.visibility =
-            "hidden";
-
-    } else {
-
-        leftHint.style.visibility =
-            "visible";
-    }
-
-
-    // =========================
-    // NEXT
-    // =========================
-
-    // Last Kanji:
-    // Next is invisible,
-    // but keeps its space.
-
-    if (progress >= kanji.length) {
-
-        rightHint.style.visibility =
-            "hidden";
-
-    } else {
-
-        rightHint.style.visibility =
-            "visible";
-    }
+    leftHint.style.visibility = progress > 1 ? "visible" : "hidden";
+    rightHint.style.visibility = progress < kanji.length ? "visible" : "hidden";
 }
-
-
-// =========================
-// SHOW PREVIOUS KANJI
-// =========================
 
 function showPreviousKanji() {
-
-    if (historyIndex <= 0) {
-        return;
-    }
-
+    if (historyIndex <= 0) return;
 
     historyIndex--;
-
-
-    current =
-        kanjiHistory[historyIndex];
-
-
+    current = kanjiHistory[historyIndex];
     revealed = false;
 
-
-    kanjiEl.textContent =
-        current.kanji;
-
-
+    kanjiEl.textContent = current.kanji;
     meaningEl.textContent = "";
     onyomiEl.textContent = "";
     kunyomiEl.textContent = "";
     examplesEl.innerHTML = "";
 
+    tapHint.style.display = "block";
+    showSwipeHints();
 
-    tapHint.style.display =
-        "block";
-
-
-    swipeHint.style.display =
-        "flex";
-
-
-    progress =
-        historyIndex + 1;
-
-
-    progressEl.textContent =
-        progress + " / " + kanji.length;
-
-
+    progress = historyIndex + 1;
+    progressEl.textContent = `${progress} / ${kanji.length}`;
     updateSwipeHints();
 }
-
-
-// =========================
-// SHOW NEXT KANJI
-// =========================
 
 function showNextKanji() {
+    if (progress >= kanji.length) return;
 
-    // Do not go beyond the last Kanji
-
-    if (progress >= kanji.length) {
-        return;
-    }
-
-
-    // If we went backwards,
-    // use existing history
-
-    if (
-        historyIndex <
-        kanjiHistory.length - 1
-    ) {
-
+    if (historyIndex < kanjiHistory.length - 1) {
         historyIndex++;
+        current = kanjiHistory[historyIndex];
+    } else {
+        if (remaining.length === 0) return;
 
-        current =
-            kanjiHistory[historyIndex];
-
-    }
-
-
-    // Otherwise get a new Kanji
-
-    else {
-
-        if (remaining.length === 0) {
-            return;
-        }
-
-
-        current =
-            remaining.pop();
-
-
+        current = remaining.pop();
         kanjiHistory.push(current);
-
-
-        historyIndex =
-            kanjiHistory.length - 1;
+        historyIndex = kanjiHistory.length - 1;
     }
 
-
-    progress =
-        historyIndex + 1;
-
-
+    progress = historyIndex + 1;
     revealed = false;
 
-
-    kanjiEl.textContent =
-        current.kanji;
-
-
+    kanjiEl.textContent = current.kanji;
     meaningEl.textContent = "";
     onyomiEl.textContent = "";
     kunyomiEl.textContent = "";
     examplesEl.innerHTML = "";
 
-
-    tapHint.style.display =
-        "block";
-
-
-    progressEl.textContent =
-        progress + " / " + kanji.length;
-
-
-    // Make sure swipe hints are visible
-    // in normal flashcard mode
-
-    swipeHint.style.display =
-        "flex";
-
-
-    updateSwipeHints();
+    tapHint.style.display = "block";
+    progressEl.textContent = `${progress} / ${kanji.length}`;
+    showSwipeHints();
 }
 
-
-// =========================
-// REVEAL / HIDE DETAILS
-// =========================
-
 function reveal() {
-
-    if (!current) {
-        return;
-    }
-
-
-    // If details are already visible:
-    // hide them
+    if (!current) return;
 
     if (revealed) {
-
         revealed = false;
-
-
         meaningEl.textContent = "";
         onyomiEl.textContent = "";
         kunyomiEl.textContent = "";
         examplesEl.innerHTML = "";
 
-
-        tapHint.style.display =
-            "block";
-
-
-        swipeHint.style.display =
-            "flex";
-
-
+        tapHint.style.display = "block";
+        showSwipeHints();
         return;
     }
 
-
-    // Show details
-
     revealed = true;
 
+    meaningEl.innerHTML = `<strong>Meaning:</strong> ${current.meaning}`;
+    onyomiEl.innerHTML = `<strong>On:</strong> ${current.onyomi}`;
+    kunyomiEl.innerHTML = `<strong>Kun:</strong> ${current.kunyomi}`;
 
-    meaningEl.innerHTML =
-        "<strong>Meaning:</strong> " +
-        current.meaning;
-
-
-    onyomiEl.innerHTML =
-        "<strong>On:</strong> " +
-        current.onyomi;
-
-
-    kunyomiEl.innerHTML =
-        "<strong>Kun:</strong> " +
-        current.kunyomi;
-
-
-    let html =
-        "<strong>Examples:</strong><br><br>";
-
-
+    let html = "<strong>Examples:</strong><br><br>";
     current.examples.forEach(example => {
-
-        html += `
-            ${example.word} (${example.reading})<br>
-            ${example.meaning}<br><br>
-        `;
-
+        html += `${example.word} (${example.reading})<br>${example.meaning}<br><br>`;
     });
+    examplesEl.innerHTML = html;
 
-
-    examplesEl.innerHTML =
-        html;
-
-
-    tapHint.style.display =
-        "none";
-
-
-    swipeHint.style.display =
-        "none";
+    tapHint.style.display = "none";
+    hideSwipeHints();
 }
-
-
-// =========================
-// RENDER ALL KANJI
-// =========================
 
 function renderKanjiGrid() {
-
     kanjiGrid.innerHTML = "";
 
-
     kanji.forEach(item => {
+        const cell = document.createElement("div");
+        cell.className = "kanjiCell";
+        cell.textContent = item.kanji;
 
-        const cell =
-            document.createElement("div");
-
-
-        cell.className =
-            "kanjiCell";
-
-
-        cell.textContent =
-            item.kanji;
-
-
-        cell.addEventListener(
-            "click",
-            () => {
-
-                openKanjiDetail(item);
-
-            }
-        );
-
+        cell.addEventListener("click", () => {
+            openKanjiDetail(item);
+        });
 
         kanjiGrid.appendChild(cell);
-
     });
 }
-
-
-// =========================
-// OPEN KANJI FROM SHOW ALL
-// =========================
 
 function openKanjiDetail(item) {
-
     current = item;
-
     revealed = true;
 
-
-    // =========================
-    // MATCH SHOW ALL ORDER
-    // =========================
-
-    const index =
-        kanji.indexOf(item);
-
-
+    const index = kanji.indexOf(item);
     if (index !== -1) {
-
-        kanjiHistory =
-            kanji.slice(0, index + 1);
-
-        historyIndex =
-            index;
-
-        progress =
-            index + 1;
-
-        progressEl.textContent =
-            progress + " / " + kanji.length;
+        kanjiHistory = kanji.slice(0, index + 1);
+        historyIndex = index;
+        progress = index + 1;
+        progressEl.textContent = `${progress} / ${kanji.length}`;
     }
 
+    kanjiEl.textContent = current.kanji;
+    meaningEl.innerHTML = `<strong>Meaning:</strong> ${current.meaning}`;
+    onyomiEl.innerHTML = `<strong>On:</strong> ${current.onyomi}`;
+    kunyomiEl.innerHTML = `<strong>Kun:</strong> ${current.kunyomi}`;
 
-    // =========================
-    // SHOW DETAILS
-    // =========================
-
-    kanjiEl.textContent =
-        current.kanji;
-
-
-    meaningEl.innerHTML =
-        "<strong>Meaning:</strong> " +
-        current.meaning;
-
-
-    onyomiEl.innerHTML =
-        "<strong>On:</strong> " +
-        current.onyomi;
-
-
-    kunyomiEl.innerHTML =
-        "<strong>Kun:</strong> " +
-        current.kunyomi;
-
-
-    let html =
-        "<strong>Examples:</strong><br><br>";
-
-
+    let html = "<strong>Examples:</strong><br><br>";
     current.examples.forEach(example => {
-
-        html += `
-            ${example.word} (${example.reading})<br>
-            ${example.meaning}<br><br>
-        `;
-
+        html += `${example.word} (${example.reading})<br>${example.meaning}<br><br>`;
     });
+    examplesEl.innerHTML = html;
 
+    tapHint.style.display = "none";
+    hideSwipeHints();
 
-    examplesEl.innerHTML =
-        html;
-
-
-    tapHint.style.display =
-        "none";
-
-
-    // =========================
-    // IMPORTANT:
-    // HIDE SWIPE HINTS
-    // =========================
-
-    swipeHint.style.display =
-        "none";
-
-
-    // =========================
-    // HIDE SHOW ALL
-    // =========================
-
-    allKanji.style.display =
-        "none";
-
-
-    // =========================
-    // SHOW CARD
-    // =========================
-
-    card.style.display =
-        "block";
-
-
-    // =========================
-    // HIDE MAIN CONTROLS
-    // =========================
-
-    nextButton.style.display =
-        "none";
-
-    progressEl.style.display =
-        "none";
-
-    showAllButton.style.display =
-        "none";
-
-
-    // =========================
-    // SHOW X BUTTON
-    // =========================
-
-    kanjiDetailBack.style.display =
-        "block";
+    allKanji.style.display = "none";
+    card.style.display = "block";
+    nextButton.style.display = "none";
+    progressEl.style.display = "none";
+    showAllButton.style.display = "none";
+    kanjiDetailBack.style.display = "block";
 }
 
+showAllButton.addEventListener("click", () => {
+    renderKanjiGrid();
+    card.style.display = "none";
+    nextButton.style.display = "none";
+    progressEl.style.display = "none";
+    showAllButton.style.display = "none";
+    kanjiDetailBack.style.display = "none";
+    allKanji.style.display = "block";
+});
 
-// =========================
-// SHOW ALL BUTTON
-// =========================
+kanjiDetailBack.addEventListener("click", () => {
+    card.style.display = "none";
+    kanjiDetailBack.style.display = "none";
+    allKanji.style.display = "block";
+});
 
-showAllButton.addEventListener(
-    "click",
-    () => {
+backButton.addEventListener("click", () => {
+    allKanji.style.display = "none";
+    card.style.display = "block";
+    nextButton.style.display = "block";
+    progressEl.style.display = "block";
+    showAllButton.style.display = "block";
+    kanjiDetailBack.style.display = "none";
+    showSwipeHints();
+});
 
-        renderKanjiGrid();
+nextButton.addEventListener("click", showNextKanji);
 
-
-        card.style.display =
-            "none";
-
-
-        nextButton.style.display =
-            "none";
-
-
-        progressEl.style.display =
-            "none";
-
-
-        showAllButton.style.display =
-            "none";
-
-
-        kanjiDetailBack.style.display =
-            "none";
-
-
-        allKanji.style.display =
-            "block";
-
+document.body.addEventListener("click", (e) => {
+    if (suppressCardClick) {
+        suppressCardClick = false;
+        return;
     }
-);
 
-
-// =========================
-// X / CLOSE BUTTON
-// =========================
-
-kanjiDetailBack.addEventListener(
-    "click",
-    () => {
-
-        card.style.display =
-            "none";
-
-
-        kanjiDetailBack.style.display =
-            "none";
-
-
-        allKanji.style.display =
-            "block";
-
+    if (
+        e.target === nextButton ||
+        e.target === showAllButton ||
+        e.target === backButton ||
+        e.target === kanjiDetailBack ||
+        e.target.classList.contains("kanjiCell")
+    ) {
+        return;
     }
-);
 
-
-// =========================
-// BACK BUTTON
-// =========================
-
-backButton.addEventListener(
-    "click",
-    () => {
-
-        allKanji.style.display =
-            "none";
-
-
-        card.style.display =
-            "block";
-
-
-        nextButton.style.display =
-            "block";
-
-
-        progressEl.style.display =
-            "block";
-
-
-        showAllButton.style.display =
-            "block";
-
-
-        kanjiDetailBack.style.display =
-            "none";
-
-
-        // =========================
-        // SHOW SWIPE HINTS AGAIN
-        // =========================
-
-        swipeHint.style.display =
-            "flex";
-
-
-        updateSwipeHints();
-
-    }
-);
-
-
-// =========================
-// NEXT BUTTON
-// =========================
-
-nextButton.addEventListener(
-    "click",
-    showNextKanji
-);
-
-
-// =========================
-// TAP CARD
-// =========================
-
-document.body.addEventListener(
-    "click",
-    (e) => {
-
-        if (suppressCardClick) {
-            suppressCardClick = false;
-            return;
-        }
-
-        if (
-            e.target === nextButton ||
-            e.target === showAllButton ||
-            e.target === backButton ||
-            e.target === kanjiDetailBack ||
-            e.target.classList.contains("kanjiCell")
-        ) {
-
-            return;
-        }
-
-
-        reveal();
-
-    }
-);
-
-
-// =========================
-// SWIPE
-// =========================
+    reveal();
+});
 
 let swipeStartX = 0;
 let swipeStartY = 0;
@@ -693,9 +254,7 @@ function applySwipePosition(deltaX) {
 }
 
 card.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "mouse" && e.button !== 0) {
-        return;
-    }
+    if (e.pointerType === "mouse" && e.button !== 0) return;
 
     swipeStartX = e.clientX;
     swipeStartY = e.clientY;
@@ -705,9 +264,7 @@ card.addEventListener("pointerdown", (e) => {
 });
 
 card.addEventListener("pointermove", (e) => {
-    if (!isDragging) {
-        return;
-    }
+    if (!isDragging) return;
 
     const deltaX = e.clientX - swipeStartX;
     const deltaY = e.clientY - swipeStartY;
@@ -721,16 +278,12 @@ card.addEventListener("pointermove", (e) => {
 });
 
 card.addEventListener("pointerup", (e) => {
-    if (!isDragging) {
-        return;
-    }
+    if (!isDragging) return;
 
     const deltaX = e.clientX - swipeStartX;
     resetSwipeState();
 
-    if (Math.abs(deltaX) < swipeThreshold) {
-        return;
-    }
+    if (Math.abs(deltaX) < swipeThreshold) return;
 
     suppressCardClick = true;
     setTimeout(() => {
@@ -746,14 +299,6 @@ card.addEventListener("pointerup", (e) => {
 
 card.addEventListener("pointercancel", resetSwipeState);
 
-
-// =========================
-// START APP
-// =========================
-
 newRound();
-
 showNextKanji();
-
 updateSwipeHints();
-
