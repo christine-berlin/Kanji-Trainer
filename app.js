@@ -168,6 +168,10 @@ function showPreviousKanji() {
         "block";
 
 
+    swipeHint.style.display =
+        "flex";
+
+
     progress =
         historyIndex + 1;
 
@@ -295,6 +299,10 @@ function reveal() {
             "block";
 
 
+        swipeHint.style.display =
+            "flex";
+
+
         return;
     }
 
@@ -338,6 +346,10 @@ function reveal() {
 
 
     tapHint.style.display =
+        "none";
+
+
+    swipeHint.style.display =
         "none";
 }
 
